@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { User } from "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase/config";
@@ -30,14 +30,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        loading,
-        isAuthenticated: !!user,
-        role: user ? (user.customClaims?.rol as string) || "egresado" : null,
-      }}
-    >
+    <AuthContext.Provider value={{ user, loading, isAuthenticated: !!user, role: (user as any)?.customClaims?.rol || "egresado" }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { TracerService } from './tracer.service';
 import { CreateTracerDto } from './dto/create-tracer.dto';
 import { FirebaseAuthGuard } from '../../common/guards/firebase-auth.guard';

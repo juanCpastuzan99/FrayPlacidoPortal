@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "@/lib/firebase/auth";
+import { useAuth as useFirebaseAuth } from "@/lib/firebase/auth";
 import { auth } from "@/lib/firebase/config";
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
+import { User } from "firebase/auth";
 
 export function useAuth() {
-  const { user, loading, isAuthenticated, role } = useAuth();
+  const { user, loading, isAuthenticated, role } = useFirebaseAuth();
   const [error, setError] = useState<string | null>(null);
 
   const login = async (email: string, password: string) => {
