@@ -1,1 +1,1 @@
-{"projects": {"default": {"database": "(default)", "storage": "gs://YOUR_BUCKET.appspot.com", "hosting": "YOUR_SITE", "functions": "us-central1"}}, "targets": {}}
+{"projects": {"default": {"database": "(default)", "storage": "gs://portalfrayplacido.firebasestorage.app", "hosting": "portalfrayplacido", "functions": "us-central1"}}, "targets": {}}
