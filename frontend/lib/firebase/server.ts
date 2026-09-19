@@ -1,27 +1,26 @@
-import { verifyIdToken } from "firebase-admin/auth";
+import { initializeApp, cert, getApps, getApp } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
 import { getFirestore } from "firebase-admin/firestore";
-import { getApps, initializeApp, cert } from "firebase-admin/app";
 
-let firebaseAdminApp: ReturnType<typeof initializeApp> | null = null;
+let app: ReturnType<typeof getApp> | null = null;
 
-function getFirebaseAdminApp() {
-  if (!firebaseAdminApp) {
+export function getFirebaseAdminApp() {
+  if (!app) {
     const serviceAccount = {
       projectId: process.env.FIREBASE_PROJECT_ID,
       privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
     };
-    firebaseAdminApp = initializeApp({ credential: cert(serviceAccount as any) });
+    app = initializeApp({ credential: cert(serviceAccount as any) });
   }
-  return firebaseAdminApp;
+  return getApp();
 }
 
-export async function verifyIdToken(idToken: string): Promise<any> {
-  const app = getFirebaseAdminApp();
-  const decoded = await getApps().length > 0 ? (await import("firebase-admin/auth")).getAuth().verifyIdToken(idToken) : null;
-  return decoded;
+export async function verifyIdToken(idToken: string) {
+  const auth = getAuth(getFirebaseAdminApp());
+  return auth.verifyIdToken(idToken);
 }
 
-export async function getFirestoreAdmin() {
+export function getFirestoreAdmin() {
   return getFirestore(getFirebaseAdminApp());
 }

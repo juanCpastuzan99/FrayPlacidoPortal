@@ -1,10 +1,12 @@
 node_modules/
 dist/
+.next/
 .env
 .env.local
 *.md
-!README.md
 !.github/
+!.README.md
+!.github/ISSUE_TEMPLATE
 .vscode/
 .idea/
 .DS_Store
@@ -19,3 +21,9 @@ __pycache__/
 *.db
 coverage/
 .nyc_output/
+*.txt
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+frontend/.next/
+backend/tsc-*.txt
+package-lock.json

@@ -1,5 +1,5 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { Controller, Get, Patch, Body, UseGuards } from '@nestjs/common';
+import { AuthService } from '../auth/auth.service';
 import { FirebaseAuthGuard } from '../../common/guards/firebase-auth.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 
