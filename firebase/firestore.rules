@@ -1,0 +1,41 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users: owner o admin
+    match /users/{userId} {
+      allow read: if request.auth != null && (request.auth.uid == userId || request.auth.token.rol == 'admin');
+      allow write: if request.auth.uid == userId && request.auth.token.rol == 'egresado';
+    }
+    // Tracer responses: owner verificado o admin agregado
+    match /tracerResponses/{userId}/{year} {
+      allow read: if request.auth != null && (request.auth.uid == userId || request.auth.token.rol == 'admin');
+      allow write: if request.auth.uid == userId
+        && request.auth.token.rol in ['egresado_verificado', 'moderador', 'admin'];
+    }
+    // Solicitudes: owner o admin
+    match /solicitudes/{solicitudId} {
+      allow read: if request.auth != null && (request.auth.uid == resource.data.uid || request.auth.token.rol == 'admin');
+      allow write: if request.auth.token.rol in ['admin', 'moderador'];
+      allow create: if request.auth != null && request.auth.token.rol == 'egresado_verificado';
+    }
+    // Oportunidades: todos pueden leer, solo moderadores/admins crean/actualizan
+    match /oportunidades/{oportunidadId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.rol in ['moderador', 'admin'];
+    }
+    // Auditoría: solo admin read, solo sistema create
+    match /auditoria/{entry} {
+      allow read: if request.auth != null && request.auth.token.rol == 'admin';
+      allow create: if request.auth != null;
+    }
+    // Notificaciones: owner o admin
+    match /notificaciones/{notifId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth.token.rol in ['moderador', 'admin'];
+    }
+    // Estadísticas agregadas: público para admin
+    match /stats/{doc} {
+      allow read: if request.auth != null && request.auth.token.rol == 'admin';
+    }
+  }
+}

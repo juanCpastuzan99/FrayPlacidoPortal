@@ -1,0 +1,37 @@
+version: "3.8"
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3001:3001"
+    environment:
+      - FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}
+      - FIREBASE_PRIVATE_KEY=${FIREBASE_PRIVATE_KEY}
+      - FIREBASE_CLIENT_EMAIL=${FIREBASE_CLIENT_EMAIL}
+      - NODE_ENV=development
+    depends_on:
+      - firebase-emulator
+    profiles:
+      - emulator
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3001
+    depends_on:
+      - backend
+    profiles:
+      - emulator
+
+  firebase-emulator:
+    image: firebaseemulator/firebase-emulator-suite
+    ports:
+      - "4000:4000"
+      - "9099:9099"
+      - "9199:9199"
+    volumes:
+      - ./firebase:/workspace
+    profiles:
+      - emulator

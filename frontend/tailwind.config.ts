@@ -1,0 +1,1 @@
+{"content": ["{flex sm:flex", "bg-white dark:bg-gray-900", "text-gray-900 dark:text-gray-100", "antialiased", "[&>*:first-child]:mt-0", "[&>*:last-child]:mb-0"], "darkMode": ["class"], "plugins": ["@tailwindcss/forms", "require:tailwindcss-animate"]}

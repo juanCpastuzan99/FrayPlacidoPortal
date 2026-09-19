@@ -1,0 +1,1 @@
+{"database": {"rules": "firestore.rules"}, "storage": {"rules": "storage.rules"}, "hosting": [{"target": "default", "public": "frontend/dist/frontend", "ignore": ["firebase.json", "**/.*", "**/node_modules/**"], "rewrites": [{"source": "**", "destination": "/index.html"}]}]}
